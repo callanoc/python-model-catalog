@@ -1,0 +1,7 @@
+grpcio>=1.51.1
+grpcio-tools>=1.51.1
+pytest-grpc>=0.8.0
+PyJWT>=1.5.3
+pytest>=7.1.2
+PyYAML~=6.0
+cryptography~=38.0.4

@@ -1,0 +1,131 @@
+syntax = "proto3";
+
+package model_catalog;
+
+
+service ModelCatalog {
+
+  rpc SignIn(SignInRequest) returns (SignInResponse) {}
+
+  rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
+
+  rpc CreateFolder(CreateFolderRequest) returns (CreateFolderResponse) {}
+
+  rpc CreateModel(CreateModelRequest) returns (CreateModelResponse) {}
+
+  rpc ListModels(ListModelsRequest) returns (ListModelsResponse) {}
+
+  rpc UploadFile(stream UploadFileRequest) returns (UploadFileResponse) {}
+
+  rpc SetModelVersion(SetModelVersionRequest) returns (SetModelVersionResponse) {}
+
+  rpc DownloadVersion(DownloadVersionRequest) returns (stream DownloadVersionResponse) {}
+
+  rpc GrantAccess(GrantAccessRequest) returns (GrantAccessResponse) {}
+
+}
+
+message Version {
+  string id = 1;
+  string file_path = 2;
+}
+
+message Model {
+  string id = 1;
+  string name = 2;
+  string folder_id = 3;
+  string description = 4;
+  repeated Version versions = 5;
+  float created_at = 6;
+  string created_by = 7;
+}
+message DownloadVersionRequest {
+  string model_id = 1;
+  string version_id = 2;
+}
+
+message DownloadVersionResponse {
+  bytes chunk_data = 1;
+}
+
+message FileMetadata {
+  string filename = 1;
+  string model_id = 2;
+}
+
+message SignInRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message SignInResponse {
+  string token = 1;
+}
+
+message SignUpRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message SignUpResponse {
+  string token = 1;
+}
+
+message CreateFolderRequest {
+  string name = 1;
+}
+
+message CreateFolderResponse {
+  string folder_id = 1;
+}
+
+
+message CreateModelRequest {
+  string name = 1;
+  string folder_id = 2;
+  string description = 3;
+}
+
+
+message CreateModelResponse {
+  string model_id = 1;
+}
+
+message ListModelsRequest {
+}
+
+message ListModelsResponse {
+  repeated Model model = 1;
+}
+
+message UploadFileRequest {
+  oneof request {
+    FileMetadata file_metadata = 1;
+    bytes chunk_data = 2;
+  }
+}
+
+message UploadFileResponse {
+  string file_path = 1;
+}
+
+message GrantAccessRequest {
+  string username = 1;
+  string folder_id = 2;
+}
+
+message GrantAccessResponse {
+  string message = 1;
+}
+
+
+message SetModelVersionRequest {
+  string model_id = 1;
+  string uploaded_file_path = 2;
+}
+
+message SetModelVersionResponse {
+  string version_id = 1;
+}
+
+tonic::include_proto!("model_catalog");

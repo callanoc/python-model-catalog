@@ -1,0 +1,7 @@
+SERVER_CRT_PATH: './credentials/server.crt'
+SERVER_KEY_PATH: './credentials/server.key'
+ADDRESS: 'localhost:50051'
+JWT_PRIVATE_KEY_PATH: "./credentials/jwtRS256.key"
+JWT_PUBLIC_KEY_PATH: "./credentials/jwtRS256.key.pub"
+TOKEN_EXPIRATION: 720
+CHUNK_SIZE: 1024
